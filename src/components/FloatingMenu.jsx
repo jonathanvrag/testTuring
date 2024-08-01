@@ -17,7 +17,7 @@ export default function FloatingMenu() {
   return (
     <Box>
       <SpeedDial
-        ariaLabel='Menú de Test Turing'
+        ariaLabel='Menú de Test Turing App'
         sx={{ position: 'absolute', bottom: 16, right: 16 }}
         icon={<SpeedDialIcon />}>
         {buttonMenu.map((button, index) => (
