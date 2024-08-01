@@ -1,21 +1,29 @@
+async function fetchAllPages(url) {
+  let results = [];
+  let nextUrl = url;
+
+  while (nextUrl) {
+    const response = await fetch(nextUrl);
+    const data = await response.json();
+    results = results.concat(data.results);
+    nextUrl = data.next; // La URL de la siguiente página
+  }
+
+  return results;
+}
+
 export async function getStarWarsData() {
   try {
-    const [filmsResponse, peopleResponse, starshipsResponse] =
-      await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_SWAPI_FILMS_URL}`),
-        fetch(`${process.env.NEXT_PUBLIC_SWAPI_PEOPLE_URL}`),
-        fetch(`${process.env.NEXT_PUBLIC_SWAPI_STARSHIPS_URL}`),
-      ]);
-
-    const [filmsData, peopleData, starshipsData] = await Promise.all([
-      filmsResponse.json(),
-      peopleResponse.json(),
-      starshipsResponse.json(),
+    const [filmsResponse] = await Promise.all([
+      fetch(`${process.env.NEXT_PUBLIC_SWAPI_FILMS_URL}`),
     ]);
 
-    console.log('Films:', filmsData);
-    console.log('People:', peopleData);
-    console.log('Starships:', starshipsData);
+    const filmsData = await filmsResponse.json();
+
+    const [peopleData, starshipsData] = await Promise.all([
+      fetchAllPages(`${process.env.NEXT_PUBLIC_SWAPI_PEOPLE_URL}`),
+      fetchAllPages(`${process.env.NEXT_PUBLIC_SWAPI_STARSHIPS_URL}`),
+    ]);
 
     return {
       films: filmsData,
