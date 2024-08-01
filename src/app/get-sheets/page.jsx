@@ -1,14 +1,28 @@
 'use client';
 
-import { Box, Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import { Box, Button } from '@mui/material';
+
+const configurations = [
+  { film: 1, characters: 3, ships: 1 },
+  { film: 0, characters: 3, ships: 2 },
+];
+
+const generateRandomEnvelope = (id) => {
+  const config = configurations[Math.floor(Math.random() * configurations.length)];
+  const film = Array(config.film).fill('film');
+  const characters = Array(config.characters).fill('character');
+  const ships = Array(config.ships).fill('ship');
+  const cards = [...film, ...characters, ...ships].sort(() => Math.random() - 0.5);
+  return { id, locked: false, timer: 0, clicked: false, cards };
+};
 
 export default function Page() {
   const [envelopes, setEnvelopes] = useState([
-    { id: 1, locked: false, timer: 0, clicked: false },
-    { id: 2, locked: false, timer: 0, clicked: false },
-    { id: 3, locked: false, timer: 0, clicked: false },
-    { id: 4, locked: false, timer: 0, clicked: false },
+    generateRandomEnvelope(1),
+    generateRandomEnvelope(2),
+    generateRandomEnvelope(3),
+    generateRandomEnvelope(4),
   ]);
 
   const openEnvelope = (id) => {
@@ -16,7 +30,7 @@ export default function Page() {
       prevEnvelopes.map((envelope) =>
         envelope.id === id
           ? { ...envelope, locked: true, timer: 0, clicked: true }
-          : { ...envelope, locked: true, timer: 60 }
+          : { ...envelope, locked: true, timer: 3 }
       )
     );
   };
@@ -79,6 +93,15 @@ export default function Page() {
               ? `Locked (${envelope.timer}s)`
               : 'Open'}
           </Button>
+          {envelope.clicked && (
+            <Box sx={{ marginTop: '10px' }}>
+              {envelope.cards.map((card, index) => (
+                <Box key={index} sx={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '5px' }}>
+                  {card}
+                </Box>
+              ))}
+            </Box>
+          )}
         </Box>
       ))}
     </Box>
