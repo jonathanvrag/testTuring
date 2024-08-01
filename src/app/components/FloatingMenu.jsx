@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 const buttonMenu = [
   { icon: <Store />, name: 'Obtener laminas', path: '/get-sheets' },
-  { icon: <PermMedia />, name: 'Mi álbum', path: '/my-album' },
+  { icon: <PermMedia />, name: 'Mi álbum', path: '/' },
 ];
 
 export default function FloatingMenu() {
