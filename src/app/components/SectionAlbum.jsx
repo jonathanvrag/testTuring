@@ -15,12 +15,13 @@ export default function SectionAlbum({ data }) {
       </AccordionSummary>
       <AccordionDetails
         sx={{
-          display: 'flex',
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
           gap: 4,
         }}>
         {data.films && data.films.results && data.films.results.length > 0 ? (
           data.films.results.map((film, index) => (
-            <CardAlbum key={index} data={film} index={index}/>
+            <CardAlbum key={index} data={film} index={index} type={'films'} />
           ))
         ) : (
           <p>No films available</p>
@@ -42,7 +43,7 @@ export default function SectionAlbum({ data }) {
           }}>
           {data.people && data.people && data.people.length > 0 ? (
             data.people.map((people, index) => (
-              <CardAlbum key={index} data={people} index={index} />
+              <CardAlbum key={index} data={people} index={index} type={'people'} />
             ))
           ) : (
             <p>No peoples available</p>
@@ -64,7 +65,7 @@ export default function SectionAlbum({ data }) {
           }}>
           {data.starships && data.starships && data.starships.length > 0 ? (
             data.starships.map((starships, index) => (
-              <CardAlbum key={index} data={starships} index={index} />
+              <CardAlbum key={index} data={starships} index={index} type={'starships'} />
             ))
           ) : (
             <p>No starships available</p>
