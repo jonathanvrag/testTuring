@@ -8,12 +8,15 @@ const configurations = [
   { film: 0, characters: 3, ships: 2 },
 ];
 
-const generateRandomEnvelope = (id) => {
-  const config = configurations[Math.floor(Math.random() * configurations.length)];
+const generateRandomEnvelope = id => {
+  const config =
+    configurations[Math.floor(Math.random() * configurations.length)];
   const film = Array(config.film).fill('film');
   const characters = Array(config.characters).fill('character');
   const ships = Array(config.ships).fill('ship');
-  const cards = [...film, ...characters, ...ships].sort(() => Math.random() - 0.5);
+  const cards = [...film, ...characters, ...ships].sort(
+    () => Math.random() - 0.5
+  );
   return { id, locked: false, timer: 0, clicked: false, cards };
 };
 
@@ -24,21 +27,24 @@ export default function Page() {
     generateRandomEnvelope(3),
     generateRandomEnvelope(4),
   ]);
+  const [openedEnvelope, setOpenedEnvelope] = useState(null);
 
-  const openEnvelope = (id) => {
-    setEnvelopes((prevEnvelopes) =>
-      prevEnvelopes.map((envelope) =>
+  const openEnvelope = id => {
+    setEnvelopes(prevEnvelopes =>
+      prevEnvelopes.map(envelope =>
         envelope.id === id
           ? { ...envelope, locked: true, timer: 0, clicked: true }
           : { ...envelope, locked: true, timer: 3 }
       )
     );
+    const envelope = envelopes.find(envelope => envelope.id === id);
+    setOpenedEnvelope(envelope);
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setEnvelopes((prevEnvelopes) =>
-        prevEnvelopes.map((envelope) =>
+      setEnvelopes(prevEnvelopes =>
+        prevEnvelopes.map(envelope =>
           envelope.locked && envelope.timer > 0
             ? { ...envelope, timer: envelope.timer - 1 }
             : envelope.locked && envelope.timer === 0 && !envelope.clicked
@@ -59,9 +65,8 @@ export default function Page() {
         justifyContent: 'center',
         gap: '20px',
         padding: '20px',
-      }}
-    >
-      {envelopes.map((envelope) => (
+      }}>
+      {envelopes.map(envelope => (
         <Box key={envelope.id}>
           <Button
             onClick={() => openEnvelope(envelope.id)}
@@ -79,31 +84,41 @@ export default function Page() {
               fontSize: '16px',
               fontWeight: 'bold',
               color: envelope.clicked ? '#999' : '#333',
-              cursor: envelope.locked || envelope.clicked ? 'not-allowed' : 'pointer',
+              cursor:
+                envelope.locked || envelope.clicked ? 'not-allowed' : 'pointer',
               transition: 'transform 0.2s, box-shadow 0.2s',
               '&:hover:not(:disabled)': {
                 transform: 'translateY(-5px)',
                 boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
               },
-            }}
-          >
+            }}>
             {envelope.clicked
               ? 'Clicked'
               : envelope.locked
               ? `Locked (${envelope.timer}s)`
               : 'Open'}
           </Button>
-          {envelope.clicked && (
-            <Box sx={{ marginTop: '10px' }}>
-              {envelope.cards.map((card, index) => (
-                <Box key={index} sx={{ padding: '5px', border: '1px solid #ccc', borderRadius: '5px', marginBottom: '5px' }}>
-                  {card}
-                </Box>
-              ))}
-            </Box>
-          )}
         </Box>
       ))}
+      {openedEnvelope && (
+        <Box sx={{ marginTop: '20px', width: '100%' }}>
+          <Box sx={{ marginBottom: '10px', fontWeight: 'bold' }}>
+            Opened Envelope:
+          </Box>
+          {openedEnvelope.cards.map((card, index) => (
+            <Box
+              key={index}
+              sx={{
+                padding: '5px',
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                marginBottom: '5px',
+              }}>
+              {card}
+            </Box>
+          ))}
+        </Box>
+      )}
     </Box>
   );
 }
