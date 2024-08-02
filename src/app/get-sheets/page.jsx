@@ -30,6 +30,7 @@ export default function Page() {
   ]);
   const [openedEnvelope, setOpenedEnvelope] = useState(null);
   const [cards, setCards] = useState([]);
+  const [resultEnvelope, setResultEnvelope] = useState([]);
 
   const openEnvelope = async id => {
     setEnvelopes(prevEnvelopes =>
@@ -55,8 +56,6 @@ export default function Page() {
         return { item: data.starships[randomIndex], index: randomIndex };
       }
     });
-    console.log(newCards);
-    console.log(data);
     setCards(newCards);
   };
 
@@ -91,6 +90,46 @@ export default function Page() {
       return 'R';
     }
     return 'unknown';
+  };
+
+  const handleAddToAlbum = card => {
+    setResultEnvelope(prev => {
+      const exists = prev.some(
+        item => item.index === card.index && item.category === getCategory(card)
+      );
+      if (!exists) {
+        setCards(prevCards => prevCards.filter(c => c.index !== card.index));
+        return [...prev, { ...card, category: getCategory(card) }];
+      }
+      return prev;
+    });
+  };
+
+  const handleDiscardFromAlbum = card => {
+    console.log('Card to discard:', card);
+    setCards(prevCards => {
+      const updatedCards = prevCards.filter(c => c.index !== card.index);
+      console.log('Updated cards:', updatedCards);
+      return updatedCards;
+    });
+  };
+  
+
+  const getCategory = card => {
+    if (card.item.title) {
+      return 'films';
+    } else if (card.item.birth_year) {
+      return 'people';
+    } else if (card.item.MGLT) {
+      return 'starships';
+    }
+    return 'unknown';
+  };
+
+  const isInAlbum = card => {
+    return resultEnvelope.some(
+      item => item.index === card.index && item.category === getCategory(card)
+    );
   };
 
   return (
@@ -165,8 +204,13 @@ export default function Page() {
                   </div>
                   <div>Número: {card.index + 1}</div>
                   <div>{getSpecialCard(card)}</div>
-                  <Button>
-                    {card.item.inAlbum ? 'Descartar' : 'Agregar al álbum'}
+                  <Button
+                    onClick={() =>{
+                      isInAlbum(card)
+                        ? handleDiscardFromAlbum(card)
+                        : handleAddToAlbum(card)
+                    }}>
+                    {isInAlbum(card) ? 'Descartar' : 'Agregar al álbum'}
                   </Button>
                 </>
               ) : (
