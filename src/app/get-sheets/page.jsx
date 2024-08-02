@@ -8,15 +8,10 @@ import { DataContext } from '../context/DataContext';
 export default function Page() {
   const {
     envelopes,
-    setEnvelopes,
     openedEnvelope,
-    setOpenedEnvelope,
     cards,
-    setCards,
     resultEnvelope,
-    setResultEnvelope,
     isLocked,
-    setIsLocked,
     openEnvelope,
     handleAddToAlbum,
     handleDiscardFromAlbum,
