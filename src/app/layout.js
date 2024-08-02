@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import FloatingMenu from './components/FloatingMenu';
-import { DataProvider } from './context/dataContext';
+import { DataProvider } from './context/DataContext';
 
 const inter = Inter({ subsets: ['latin'] });
 

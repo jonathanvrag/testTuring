@@ -1,44 +1,30 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Box, Button } from '@mui/material';
 import { getStarWarsData } from '../services/getStarWars';
-
-const configurations = [
-  { film: 1, characters: 3, ships: 1 },
-  { film: 0, characters: 3, ships: 2 },
-];
-
-const generateRandomEnvelope = id => {
-  const config =
-    configurations[Math.floor(Math.random() * configurations.length)];
-  const film = Array(config.film).fill('film');
-  const characters = Array(config.characters).fill('character');
-  const ships = Array(config.ships).fill('ship');
-  const cards = [...film, ...characters, ...ships].sort(
-    () => Math.random() - 0.5
-  );
-  return { id, locked: false, timer: 0, clicked: false, cards };
-};
+import { DataContext } from '../context/DataContext';
 
 export default function Page() {
-  const [envelopes, setEnvelopes] = useState([
-    generateRandomEnvelope(1),
-    generateRandomEnvelope(2),
-    generateRandomEnvelope(3),
-    generateRandomEnvelope(4),
-  ]);
-  const [openedEnvelope, setOpenedEnvelope] = useState(null);
-  const [cards, setCards] = useState([]);
-  const [resultEnvelope, setResultEnvelope] = useState([]);
-  const [isLocked, setIsLocked] = useState(true);
+  const {
+    envelopes,
+    setEnvelopes,
+    openedEnvelope,
+    setOpenedEnvelope,
+    cards,
+    setCards,
+    resultEnvelope,
+    setResultEnvelope,
+    isLocked,
+    setIsLocked,
+  } = useContext(DataContext);
 
   const openEnvelope = async id => {
     setEnvelopes(prevEnvelopes =>
       prevEnvelopes.map(envelope =>
         envelope.id === id
           ? { ...envelope, locked: true, timer: 0, clicked: true }
-          : { ...envelope, locked: true, timer: 3 }
+          : { ...envelope, locked: true, timer: 60 }
       )
     );
     const envelope = envelopes.find(envelope => envelope.id === id);
