@@ -19,7 +19,11 @@ export default function CardAlbum({ index, data, type }) {
         maxWidth: 345,
       }}>
       <CardHeader
-        avatar={<Avatar sx={{ bgcolor: special ? 'gold' : 'blue' }}>{special ? 'S' : 'R'}</Avatar>}
+        avatar={
+          <Avatar sx={{ bgcolor: special ? 'gold' : 'blue' }}>
+            {special ? 'S' : 'R'}
+          </Avatar>
+        }
         title={`#${index + 1} - ${title}${name}`}></CardHeader>
     </Card>
   );

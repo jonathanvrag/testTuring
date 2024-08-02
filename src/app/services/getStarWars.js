@@ -6,7 +6,7 @@ async function fetchAllPages(url) {
     const response = await fetch(nextUrl);
     const data = await response.json();
     results = results.concat(data.results);
-    nextUrl = data.next; // La URL de la siguiente página
+    nextUrl = data.next;
   }
 
   return results;
@@ -14,13 +14,8 @@ async function fetchAllPages(url) {
 
 export async function getStarWarsData() {
   try {
-    const [filmsResponse] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_SWAPI_FILMS_URL}`),
-    ]);
-
-    const filmsData = await filmsResponse.json();
-
-    const [peopleData, starshipsData] = await Promise.all([
+    const [filmsData, peopleData, starshipsData] = await Promise.all([
+      fetchAllPages(`${process.env.NEXT_PUBLIC_SWAPI_FILMS_URL}`),
       fetchAllPages(`${process.env.NEXT_PUBLIC_SWAPI_PEOPLE_URL}`),
       fetchAllPages(`${process.env.NEXT_PUBLIC_SWAPI_STARSHIPS_URL}`),
     ]);

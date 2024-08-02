@@ -25,8 +25,8 @@ export default function SectionAlbum({ data }) {
             gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
             gap: 4,
           }}>
-          {data.films && data.films.results && data.films.results.length > 0 ? (
-            data.films.results.map((film, index) => (
+          {data.films && data.films && data.films.length > 0 ? (
+            data.films.map((film, index) => (
               <CardAlbum key={index} data={film} index={index} type={'films'} />
             ))
           ) : (

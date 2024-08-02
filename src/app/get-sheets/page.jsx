@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
+import { getStarWarsData } from '../services/getStarWars';
 
 const configurations = [
   { film: 1, characters: 3, ships: 1 },
@@ -28,8 +29,9 @@ export default function Page() {
     generateRandomEnvelope(4),
   ]);
   const [openedEnvelope, setOpenedEnvelope] = useState(null);
+  const [cards, setCards] = useState([]);
 
-  const openEnvelope = id => {
+  const openEnvelope = async id => {
     setEnvelopes(prevEnvelopes =>
       prevEnvelopes.map(envelope =>
         envelope.id === id
@@ -39,6 +41,23 @@ export default function Page() {
     );
     const envelope = envelopes.find(envelope => envelope.id === id);
     setOpenedEnvelope(envelope);
+
+    const data = await getStarWarsData();
+    const newCards = envelope.cards.map(cardType => {
+      if (cardType === 'film') {
+        const randomIndex = Math.floor(Math.random() * data.films.length);
+        return { item: data.films[randomIndex], index: randomIndex };
+      } else if (cardType === 'character') {
+        const randomIndex = Math.floor(Math.random() * data.people.length);
+        return { item: data.people[randomIndex], index: randomIndex };
+      } else if (cardType === 'ship') {
+        const randomIndex = Math.floor(Math.random() * data.starships.length);
+        return { item: data.starships[randomIndex], index: randomIndex };
+      }
+    });
+    console.log(newCards);
+    console.log(data);
+    setCards(newCards);
   };
 
   useEffect(() => {
@@ -56,6 +75,23 @@ export default function Page() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const getSpecialCard = card => {
+    if (card.item.title && card.index < 6) {
+      return 'S';
+    } else if (card.item.title) {
+      return 'R';
+    } else if (card.item.birth_year && card.index < 20) {
+      return 'S';
+    } else if (card.item.birth_year) {
+      return 'R';
+    } else if (card.item.MGLT && card.index < 10) {
+      return 'S';
+    } else if (card.item.MGLT) {
+      return 'R';
+    }
+    return 'unknown';
+  };
 
   return (
     <Box
@@ -105,7 +141,7 @@ export default function Page() {
           <Box sx={{ marginBottom: '10px', fontWeight: 'bold' }}>
             Opened Envelope:
           </Box>
-          {openedEnvelope.cards.map((card, index) => (
+          {cards.map((card, index) => (
             <Box
               key={index}
               sx={{
@@ -114,7 +150,28 @@ export default function Page() {
                 borderRadius: '5px',
                 marginBottom: '5px',
               }}>
-              {card}
+              {card ? (
+                <>
+                  <div>{card.item.title || card.item.name}</div>
+                  <div>
+                    Categoría:
+                    {card.item.title
+                      ? ' films'
+                      : card.item.birth_year
+                      ? ' people'
+                      : card.item.MGLT
+                      ? ' starships'
+                      : 'unknown'}
+                  </div>
+                  <div>Número: {card.index + 1}</div>
+                  <div>{getSpecialCard(card)}</div>
+                  <Button>
+                    {card.item.inAlbum ? 'Descartar' : 'Agregar al álbum'}
+                  </Button>
+                </>
+              ) : (
+                <div>Card data is not available</div>
+              )}
             </Box>
           ))}
         </Box>
