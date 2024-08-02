@@ -31,6 +31,7 @@ export default function Page() {
   const [openedEnvelope, setOpenedEnvelope] = useState(null);
   const [cards, setCards] = useState([]);
   const [resultEnvelope, setResultEnvelope] = useState([]);
+  const [isLocked, setIsLocked] = useState(true);
 
   const openEnvelope = async id => {
     setEnvelopes(prevEnvelopes =>
@@ -75,6 +76,17 @@ export default function Page() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    if (
+      cards.length === 0 &&
+      envelopes.every(envelope => envelope.timer === 0)
+    ) {
+      setIsLocked(false);
+    } else {
+      setIsLocked(true);
+    }
+  }, [cards, envelopes]);
+
   const getSpecialCard = card => {
     if (card.item.title && card.index < 6) {
       return 'S';
@@ -106,14 +118,11 @@ export default function Page() {
   };
 
   const handleDiscardFromAlbum = card => {
-    console.log('Card to discard:', card);
     setCards(prevCards => {
       const updatedCards = prevCards.filter(c => c.index !== card.index);
-      console.log('Updated cards:', updatedCards);
       return updatedCards;
     });
   };
-  
 
   const getCategory = card => {
     if (card.item.title) {
@@ -145,7 +154,7 @@ export default function Page() {
         <Box key={envelope.id}>
           <Button
             onClick={() => openEnvelope(envelope.id)}
-            disabled={envelope.locked || envelope.clicked}
+            disabled={envelope.locked || envelope.clicked || isLocked}
             sx={{
               width: '150px',
               height: '200px',
@@ -205,10 +214,10 @@ export default function Page() {
                   <div>Número: {card.index + 1}</div>
                   <div>{getSpecialCard(card)}</div>
                   <Button
-                    onClick={() =>{
+                    onClick={() => {
                       isInAlbum(card)
                         ? handleDiscardFromAlbum(card)
-                        : handleAddToAlbum(card)
+                        : handleAddToAlbum(card);
                     }}>
                     {isInAlbum(card) ? 'Descartar' : 'Agregar al álbum'}
                   </Button>
