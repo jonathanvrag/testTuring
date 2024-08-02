@@ -1,18 +1,8 @@
+import { Circle } from '@mui/icons-material';
 import { Avatar, Card, CardHeader } from '@mui/material';
 import React from 'react';
 
-function isSpecial(index, type) {
-  if (type === 'films' && index < 6) return true;
-  if (type === 'people' && index < 20) return true;
-  if (type === 'starships' && index < 10) return true;
-  return false;
-}
-
-export default function CardAlbum({ index, data, type }) {
-  const title = data.title ? data.title : '';
-  const name = data.name ? data.name : '';
-  const special = isSpecial(index, type);
-
+export default function CardAlbum({ index, type }) {
   return (
     <Card
       sx={{
@@ -20,11 +10,14 @@ export default function CardAlbum({ index, data, type }) {
       }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: special ? 'gold' : 'blue' }}>
-            {special ? 'S' : 'R'}
+          <Avatar
+            sx={{
+              bgcolor: 'gray',
+            }}>
+            <Circle />
           </Avatar>
         }
-        title={`#${index + 1} - ${title}${name}`}></CardHeader>
+        title={`#${index + 1}`}></CardHeader>
     </Card>
   );
 }
