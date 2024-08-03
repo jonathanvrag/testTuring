@@ -29,11 +29,21 @@ export default function Home() {
 
   return (
     <Box
-      sx={{ 
+      sx={{
         padding: '5vh 5vw',
-       }}
-    >
-      <Typography variant='h1' sx={{ textAlign: 'center', padding: '1vh 1vw', color: '#ffb01f' }}>Mi Álbum</Typography>
+      }}>
+      <Typography
+        variant='h1'
+        sx={{
+          textAlign: 'center',
+          padding: '1vh 1vw',
+          color: '#ffb01f',
+          fontFamily: 'PT Sans Narrow, sans-serif',
+          fontWeight: 'bold',
+          letterSpacing: '0.1em',
+        }}>
+        Mi Álbum
+      </Typography>
       <SectionAlbum data={data} />
     </Box>
   );
