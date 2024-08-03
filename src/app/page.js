@@ -11,10 +11,14 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log('Fetching data...');
-        const result = await getStarWarsData();
-        console.log('Data fetched:', result);
-        setData(result);
+        const storedData = localStorage.getItem('starWarsData');
+        if (storedData) {
+          setData(JSON.parse(storedData));
+        } else {
+          const result = await getStarWarsData();
+          setData(result);
+          localStorage.setItem('starWarsData', JSON.stringify(result));
+        }
       } catch (error) {
         console.error('Error fetching Star Wars data:', error);
       }
