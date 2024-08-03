@@ -167,7 +167,7 @@ export default function Page() {
             {isLoading && (
               <Box
                 sx={{
-                  width: '86vw',
+                  width: '88vw',
                   height: '10vh',
                   display: 'flex',
                   justifyContent: 'center',
