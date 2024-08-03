@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { Box, Button, Typography } from '@mui/material';
 import { DataContext } from '../context/DataContext';
 import { DeleteForever, LibraryAdd } from '@mui/icons-material';
+import Spinner from '../components/Sppiner/Loader';
 
 const typographyStyles = {
   color: 'black',
@@ -32,6 +33,7 @@ export default function Page() {
     handleAddToAlbum,
     handleDiscardFromAlbum,
     getCategory,
+    isLoading,
   } = useContext(DataContext);
 
   const getSpecialCard = card => {
@@ -162,6 +164,18 @@ export default function Page() {
               gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
               gap: 4,
             }}>
+            {isLoading && (
+              <Box
+                sx={{
+                  width: '86vw',
+                  height: '10vh',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Spinner />
+              </Box>
+            )}
             {cards.map((card, index) => (
               <Box
                 key={index}

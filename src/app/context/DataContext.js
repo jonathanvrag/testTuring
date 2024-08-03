@@ -32,8 +32,10 @@ export const DataProvider = ({ children }) => {
   const [cards, setCards] = useState([]);
   const [resultEnvelope, setResultEnvelope] = useState([]);
   const [isLocked, setIsLocked] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const openEnvelope = async id => {
+    setIsLoading(true);
     setEnvelopes(prevEnvelopes =>
       prevEnvelopes.map(envelope =>
         envelope.id === id
@@ -57,6 +59,7 @@ export const DataProvider = ({ children }) => {
       }
     });
     setCards(newCards);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -132,6 +135,8 @@ export const DataProvider = ({ children }) => {
         handleAddToAlbum,
         handleDiscardFromAlbum,
         getCategory,
+        isLoading,
+        setIsLoading,
       }}>
       {children}
     </DataContext.Provider>
