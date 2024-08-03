@@ -30,8 +30,10 @@ const buttonStyles = {
   width: '40px',
   height: '40px',
   minWidth: '0',
-  backgroundColor: '#e17711',
+  backgroundColor: 'rgba(225, 119, 17, 0.7)',
   color: '#fff',
+  '&:hover': {
+    backgroundColor: 'rgba(225, 119, 17, 1)',}
 };
 
 function isSpecial(index, type) {

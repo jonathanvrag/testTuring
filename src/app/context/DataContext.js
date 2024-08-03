@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { getStarWarsData } from '../services/getStarWars';
 
 export const DataContext = createContext();
@@ -29,7 +29,6 @@ export const DataProvider = ({ children }) => {
     generateRandomEnvelope(3),
     generateRandomEnvelope(4),
   ]);
-  const [openedEnvelope, setOpenedEnvelope] = useState(null);
   const [cards, setCards] = useState([]);
   const [resultEnvelope, setResultEnvelope] = useState([]);
   const [isLocked, setIsLocked] = useState(true);
@@ -43,7 +42,6 @@ export const DataProvider = ({ children }) => {
       )
     );
     const envelope = envelopes.find(envelope => envelope.id === id);
-    setOpenedEnvelope(envelope);
 
     const data = await getStarWarsData();
     const newCards = envelope.cards.map(cardType => {
@@ -124,8 +122,6 @@ export const DataProvider = ({ children }) => {
       value={{
         envelopes,
         setEnvelopes,
-        openedEnvelope,
-        setOpenedEnvelope,
         cards,
         setCards,
         resultEnvelope,
