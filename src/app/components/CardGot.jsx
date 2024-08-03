@@ -31,7 +31,7 @@ const buttonStyles = {
   height: '40px',
   minWidth: '0',
   backgroundColor: '#e17711',
-  color: '#fff'
+  color: '#fff',
 };
 
 function isSpecial(index, type) {

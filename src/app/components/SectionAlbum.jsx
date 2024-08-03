@@ -21,8 +21,8 @@ const accordionStyles = {
 
 const typographyStyles = {
   color: '#ffb01f',
-  fontFamily: 'PT Sans Narrow, sans-serif'
-}
+  fontFamily: 'PT Sans Narrow, sans-serif',
+};
 
 export default function SectionAlbum({ data }) {
   const { resultEnvelope } = useContext(DataContext);
@@ -40,7 +40,9 @@ export default function SectionAlbum({ data }) {
           expandIcon={<ArrowDropDown />}
           aria-controls='SectionAlbum-content'
           id='sectionfilms'>
-          <Typography variant='h3' sx={typographyStyles}>Películas</Typography>
+          <Typography variant='h3' sx={typographyStyles}>
+            Películas
+          </Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -72,7 +74,9 @@ export default function SectionAlbum({ data }) {
           expandIcon={<ArrowDropDown />}
           aria-controls='SectionAlbum-content'
           id='sectionfilms'>
-          <Typography variant='h3' sx={typographyStyles}>Personajes</Typography>
+          <Typography variant='h3' sx={typographyStyles}>
+            Personajes
+          </Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -109,7 +113,9 @@ export default function SectionAlbum({ data }) {
           expandIcon={<ArrowDropDown />}
           aria-controls='SectionAlbum-content'
           id='sectionfilms'>
-          <Typography variant='h3' sx={typographyStyles}>Naves</Typography>
+          <Typography variant='h3' sx={typographyStyles}>
+            Naves
+          </Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{

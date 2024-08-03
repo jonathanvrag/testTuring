@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 
+const typographyStyles = {
+  color: '#232323',
+  fontFamily: 'PT Sans Narrow, sans-serif',
+};
+
 function fetchEndpointData(url, setData) {
   fetch(url)
     .then(response => response.json())
@@ -110,27 +115,26 @@ export default function ModalContent({
     <Box
       sx={{
         height: '80vh',
+        width: '60vw',
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        boxShadow: 24,
-        p: 4,
+        padding: '25px',
+        backgroundColor: '#E7DBCB',
+        boxShadow: '0 8px 16px rgba(0, 0, 0, 0.8)',
+        border: '1px solid rgba(255, 255, 255, 0.18)',
+        borderRadius: '10px',
         overflowY: 'auto',
       }}>
-      <Typography variant='h6' component='h2'>
+      <Typography
+        variant='h3'
+        sx={{ ...typographyStyles, fontWeight: 700, padding: '20px' }}>
         {`#${index + 1} - ${title || name}`}
       </Typography>
-      <Typography sx={{ mt: 2 }}>{renderJSON(data, fetchedData)}</Typography>
-      <Button
-        onClick={handleClose}
-        variant='contained'
-        color='primary'
-        sx={{ mt: 2 }}>
-        Close
-      </Button>
+      <Typography variant='h5' sx={typographyStyles}>
+        {renderJSON(data, fetchedData)}
+      </Typography>
     </Box>
   );
 }
