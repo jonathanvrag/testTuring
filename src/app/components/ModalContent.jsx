@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const typographyStyles = {
   color: '#232323',
@@ -68,15 +68,8 @@ function renderJSON(data, fetchedData) {
   return <span>{data.toString()}</span>;
 }
 
-export default function ModalContent({
-  index,
-  title,
-  name,
-  data,
-  handleClose,
-}) {
+export default function ModalContent({ index, title, name, data }) {
   const [fetchedData, setFetchedData] = useState({});
-  console.log('data: ', data);
 
   useEffect(() => {
     const urls = Object.entries(data)
