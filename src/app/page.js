@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { getStarWarsData } from './services/getStarWars';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import SectionAlbum from './components/SectionAlbum';
 
 export default function Home() {
@@ -28,7 +28,12 @@ export default function Home() {
   }, []);
 
   return (
-    <Box>
+    <Box
+      sx={{ 
+        padding: '5vh 5vw',
+       }}
+    >
+      <Typography variant='h1' sx={{ textAlign: 'center', padding: '1vh 1vw', color: '#ffb01f' }}>Mi Álbum</Typography>
       <SectionAlbum data={data} />
     </Box>
   );

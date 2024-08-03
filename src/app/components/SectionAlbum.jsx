@@ -4,12 +4,25 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Skeleton,
+  Typography,
 } from '@mui/material';
 import { ArrowDropDown } from '@mui/icons-material';
 import CardAlbum from './CardAlbum';
 import CardGot from './CardGot';
 import { DataContext } from '../context/DataContext';
+
+const accordionStyles = {
+  backdropFilter: 'blur(10px)',
+  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+  border: '1px solid rgba(255, 255, 255, 0.18)',
+  borderRadius: '10px',
+};
+
+const typographyStyles = {
+  color: '#ffb01f',
+  fontFamily: 'PT Sans Narrow, sans-serif'
+}
 
 export default function SectionAlbum({ data }) {
   const { resultEnvelope } = useContext(DataContext);
@@ -22,12 +35,12 @@ export default function SectionAlbum({ data }) {
 
   return (
     <Box>
-      <Accordion defaultExpanded>
+      <Accordion defaultExpanded style={accordionStyles}>
         <AccordionSummary
           expandIcon={<ArrowDropDown />}
           aria-controls='SectionAlbum-content'
           id='sectionfilms'>
-          Films
+          <Typography variant='h3' sx={typographyStyles}>Películas</Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -38,17 +51,9 @@ export default function SectionAlbum({ data }) {
           {data.films && data.films.length > 0 ? (
             data.films.map((film, index) =>
               isInResultEnvelope(index, 'films') ? (
-                <CardGot 
-                key={index} 
-                data={film}
-                index={index}
-                type={'films'}/>
+                <CardGot key={index} data={film} index={index} type={'films'} />
               ) : (
-                <CardAlbum
-                  key={index}
-                  index={index}
-                  type={'films'}
-                />
+                <CardAlbum key={index} index={index} type={'films'} />
               )
             )
           ) : (
@@ -58,22 +63,16 @@ export default function SectionAlbum({ data }) {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 gap: 4,
-              }}>
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-            </Box>
+              }}></Box>
           )}
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion defaultExpanded style={accordionStyles}>
         <AccordionSummary
           expandIcon={<ArrowDropDown />}
           aria-controls='SectionAlbum-content'
           id='sectionfilms'>
-          Peoples
+          <Typography variant='h3' sx={typographyStyles}>Personajes</Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -84,16 +83,14 @@ export default function SectionAlbum({ data }) {
           {data.people && data.people.length > 0 ? (
             data.people.map((people, index) =>
               isInResultEnvelope(index, 'people') ? (
-                <CardGot key={index} 
-                data={people}
-                index={index}
-                type={'people'}/>
-              ) : (
-                <CardAlbum
+                <CardGot
                   key={index}
+                  data={people}
                   index={index}
                   type={'people'}
                 />
+              ) : (
+                <CardAlbum key={index} index={index} type={'people'} />
               )
             )
           ) : (
@@ -103,22 +100,16 @@ export default function SectionAlbum({ data }) {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 gap: 4,
-              }}>
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-            </Box>
+              }}></Box>
           )}
         </AccordionDetails>
       </Accordion>
-      <Accordion>
+      <Accordion defaultExpanded style={accordionStyles}>
         <AccordionSummary
           expandIcon={<ArrowDropDown />}
           aria-controls='SectionAlbum-content'
           id='sectionfilms'>
-          Starships
+          <Typography variant='h3' sx={typographyStyles}>Naves</Typography>
         </AccordionSummary>
         <AccordionDetails
           sx={{
@@ -130,16 +121,13 @@ export default function SectionAlbum({ data }) {
             data.starships.map((starship, index) =>
               isInResultEnvelope(index, 'starships') ? (
                 <CardGot
-                key={index}
-                data={starship}
-                index={index}
-                type={'starships'}/>
-              ) : (
-                <CardAlbum
                   key={index}
+                  data={starship}
                   index={index}
                   type={'starships'}
                 />
+              ) : (
+                <CardAlbum key={index} index={index} type={'starships'} />
               )
             )
           ) : (
@@ -149,13 +137,7 @@ export default function SectionAlbum({ data }) {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                 gap: 4,
-              }}>
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-              <Skeleton variant='rectangular' width={345} height={80} />
-            </Box>
+              }}></Box>
           )}
         </AccordionDetails>
       </Accordion>
