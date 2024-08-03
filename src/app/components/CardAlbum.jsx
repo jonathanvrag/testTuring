@@ -9,17 +9,17 @@ const cardStyles = {
   border: '1px solid rgba(255, 255, 255, 0.18)',
   borderRadius: '10px',
   maxWidth: 345,
+  minHeight: 140,
 };
 
 const typographyStyles = {
   color: 'black',
   fontFamily: 'PT Sans Narrow, sans-serif',
-}
+};
 
 export default function CardAlbum({ index, type }) {
   return (
-    <Card
-      sx={cardStyles}>
+    <Card sx={cardStyles}>
       <CardHeader
         avatar={
           <Avatar
@@ -29,6 +29,7 @@ export default function CardAlbum({ index, type }) {
             <Circle />
           </Avatar>
         }
+        titleTypographyProps={{ fontSize: '1.2rem' }}
         title={`#${index + 1}`}
         sx={typographyStyles}></CardHeader>
     </Card>

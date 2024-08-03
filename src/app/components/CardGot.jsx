@@ -1,6 +1,38 @@
 import React, { useState } from 'react';
-import { Avatar, Button, Card, CardContent, CardHeader, Modal } from '@mui/material';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Modal,
+} from '@mui/material';
 import ModalContent from './ModalContent';
+import { OpenInNew } from '@mui/icons-material';
+
+const cardStyles = {
+  backdropFilter: 'blur(10px)',
+  backgroundColor: 'rgba(255, 255, 255, 0.3)',
+  boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
+  border: '1px solid rgba(255, 255, 255, 0.18)',
+  borderRadius: '10px',
+  maxWidth: 345,
+  minHeight: 140,
+};
+
+const typographyStyles = {
+  color: 'white',
+  fontFamily: 'PT Sans Narrow, sans-serif',
+};
+
+const buttonStyles = {
+  borderRadius: '50%',
+  width: '40px',
+  height: '40px',
+  minWidth: '0',
+  backgroundColor: '#e17711',
+  color: '#fff'
+};
 
 function isSpecial(index, type) {
   if (type === 'films' && index < 6) return true;
@@ -20,26 +52,38 @@ export default function CardGot({ index, data, type }) {
 
   return (
     <>
-      <Card
-        sx={{
-          maxWidth: 345,
-        }}>
+      <Card sx={cardStyles}>
         <CardHeader
           avatar={
             <Avatar
               sx={{
-                bgcolor: special ? 'gold' : 'blue',
+                ...typographyStyles,
+                bgcolor: special ? 'gold' : 'purple',
+                fontSize: '1.5rem',
               }}>
               {special ? 'S' : 'R'}
             </Avatar>
           }
+          titleTypographyProps={{ fontSize: '1.2rem' }}
           title={`#${index + 1} - ${title}${name}`}></CardHeader>
-        <CardContent>
-          <Button variant='contained' color='primary' onClick={handleOpen}>More information</Button>
+        <CardContent
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}>
+          <Button variant='text' sx={buttonStyles} onClick={handleOpen}>
+            <OpenInNew />
+          </Button>
         </CardContent>
       </Card>
       <Modal open={open} onClose={handleClose}>
-        <ModalContent index={index} title={title} name={name} data={data} handleClose={handleClose} />
+        <ModalContent
+          index={index}
+          title={title}
+          name={name}
+          data={data}
+          handleClose={handleClose}
+        />
       </Modal>
     </>
   );
