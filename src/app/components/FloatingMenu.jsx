@@ -12,7 +12,7 @@ const buttonMenu = [
 export default function FloatingMenu() {
   const router = useRouter();
 
-  const handleNavigation = (path) => {
+  const handleNavigation = path => {
     router.push(path);
   };
 
@@ -20,7 +20,7 @@ export default function FloatingMenu() {
     <Box>
       <SpeedDial
         ariaLabel='Menú de Test Turing'
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
         icon={<SpeedDialIcon />}>
         {buttonMenu.map((button, index) => (
           <SpeedDialAction
@@ -28,6 +28,13 @@ export default function FloatingMenu() {
             icon={button.icon}
             tooltipTitle={button.name}
             onClick={() => handleNavigation(button.path)}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  fontSize: '1.2rem',
+                },
+              },
+            }}
           />
         ))}
       </SpeedDial>
